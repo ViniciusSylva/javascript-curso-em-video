@@ -7,7 +7,7 @@
     <title>Finance</title>
 </head>
 <body>
-    <!-- Sidebar teste -->
+    <!-- Sidebar - Barra da esquerda -->
     <div class="sidebar">
     <h1><span>Fin</span>ance</h1>
     <nav>
@@ -18,18 +18,19 @@
         <a href="#" data-page="relatorios"><span class="icon">📈</span> Relatórios</a>
     </nav>
     </div>
-    <!-- Main Content -->
+    <!-- Main Content - Todo o conteudo -->
     <div class="main">
+    
     <!-- DASHBOARD -->
     <div id="page-dashboard" class="page">
         <div class="container-wide">
-        <div class="page-header">
-            <h2>Dashboard</h2>
+        <div class="page-header">  <!-- Cabeçalho do dash -->
+            <h2>Dashboard</h2> 
             <p id="dash-subtitle"></p>
         </div>
-        <div class="dash-grid">
+        <div class="dash-grid"> <!-- Parte de baixo do cabeçalho do dash -->
             <div>
-            <!-- Income Section -->
+            <!-- Income Section - Parte de cima do dash -->
             <div class="card card-sm">
                 <div class="page-header-row" style="margin-bottom:16px">
                 <span class="card-title" style="margin-bottom:0">💰 Renda do Mês</span>
@@ -55,7 +56,7 @@
                 <span class="val" id="saldo" style="font-weight:700">R$ 0,00</span>
                 </div>
             </div>
-            <!-- Summary Cards -->
+            <!-- Summary Cards - Parte do meio do dash -->
             <div class="summary-grid">
                 <div class="card card-sm summary-card">
                 <div class="top-row"><span class="label">Total Gastos</span><span class="icon-badge" style="background:hsla(160,84%,44%,0.2)">💼</span></div>
@@ -70,19 +71,20 @@
                 <div class="value" id="dash-expenses-total">R$ 0,00</div>
                 </div>
             </div>
-            <!-- Recent Transactions -->
+            <!-- Recent Transactions - Parte de baixo do dash-->
             <div class="card">
                 <div class="card-title">Transações Recentes</div>
                 <div id="recent-transactions"></div>
             </div>
             </div>
-            <!-- Calendar -->
+            <!-- Calendar - Calendário a esquerda -->
             <div>
             <div class="card calendar" id="calendar-container"></div>
             </div>
         </div>
         </div>
     </div>
+
     <!-- CARTÃO -->
     <div id="page-cartao" class="page hidden">
         <div class="container">
