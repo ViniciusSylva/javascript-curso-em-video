@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendendo DOM</title>
+    <style>
+        body {
+            background-color: aqua;
+            color: white;
+            font: normal 18pt arial;
+        }
+    </style>
+</head>
+<body>
+    <h1>Iniciando estudos com DOM</h1>
+    <p>Título 1</p>
+    <p id="paragrafo2">Título 2</p>
+    <p name="paragrafo3">Título 3</p>
+    <p class="paragrafo4">Título 4</p>
+    <p>Título 5</p>
+    <br>
+    <br>
+    <script>
+        //Por marca
+        var p1 = window.document.getElementsByTagName('p')[0]
+        window.document.write(p1.innerHTML) //Repete a linha
+        p1.style.color = 'black' //Troca cor da letra
+
+        //Por ID
+        var p2 = window.document.getElementById('paragrafo2')
+        p2.style.background = 'white' //Muda fundo
+        p2.innerText = 'estou aguardando...' //Muda texto
+        p2.style.color = 'black' //Troca cor da letra
+
+        //Por Name
+        var p3 = window.document.getElementsByName('paragrafo3')[0]
+        p3.innerText = 'Novo título 3'
+
+        //Por Class
+        var p4 = window.document.getElementsByClassName('paragrafo4')[0]
+        p4.style.color = 'red'
+
+        //Por seletor
+        //Mudando mais coisas do paragrafo 2
+        // # = id
+        var p5 = window.document.querySelector('p#paragrafo2')
+        p5.style.background = 'red'
+
+        //Mudando mais coisas do paragrafo 4
+        // . = classe
+        var p6 = window.document.querySelector('p.paragrafo4')
+        p6.style.background = 'black'
+        p6.style.color = 'white'
+    </script>
+</body>
+</html>

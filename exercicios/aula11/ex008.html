@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nacionalidade</title>
+</head>
+<body>
+    <h1>Sistema de Nacionalidade</h1>
+    Em qual país você nasceu: <input type="text" name="nac" id="nac">
+    <input type="button" value="Verificar">
+    <div id="res">
+
+    </div>
+    <script>
+        var nasc = window.document.getElementById('nac')
+        var resto = window.document.querySelector('div#res')
+        resto.innerHTML = `<p>Sua nacionalidade é ${nasc}.</p>`
+        if (nasc = Brasi) {
+            resto.innerHTML += '<p>Você é Brasileiro.</p>'
+        } 
+            resto.innerHTML += '<p>Você é Estrangeiro.</p>'
+    </script>
+</body>
+</html>
+
