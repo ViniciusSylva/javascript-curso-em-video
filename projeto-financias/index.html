@@ -84,15 +84,15 @@
         </div>
         </div>
     </div>
-
+]
     <!-- CARTÃO -->
     <div id="page-cartao" class="page hidden">
         <div class="container">
-        <div class="page-header">
+        <div class="page-header"> <!-- CARTÃO - Parte de cima da área cartão -->
             <h2>Cartão</h2>
             <p>Gerencie os gastos do seu cartão de crédito</p>
         </div>
-        <div class="card">
+        <div class="card"> <!-- CARTÃO - Parte do meio da área cartão -->
             <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:12px">
                 <span class="icon-badge" style="background:hsla(220,90%,56%,0.2);font-size:1.5rem">💳</span>
@@ -104,20 +104,21 @@
             <button class="btn btn-blue" onclick="openModal('card-modal')">+ Adicionar Gasto</button>
             </div>
         </div>
-        <div class="card">
+        <div class="card"> <!-- CARTÃO - Parte de baixo da área cartão -->
             <div class="card-title" id="card-list-title"></div>
             <div id="card-expenses-list"></div>
         </div>
         </div>
     </div>
+
     <!-- GASTOS -->
     <div id="page-gastos" class="page hidden">
         <div class="container">
-        <div class="page-header">
+        <div class="page-header"> <!-- GASTOS - Parte de cima da área gastos -->
             <h2>Gastos</h2>
             <p>Controle seus gastos gerais do mês</p>
         </div>
-        <div class="card">
+        <div class="card"> <!-- GASTOS - Parte do meio da área gastos -->
             <div class="page-header-row">
             <div style="display:flex;align-items:center;gap:12px">
                 <span class="icon-badge" style="background:hsla(330,85%,60%,0.2);font-size:1.5rem">📉</span>
@@ -129,28 +130,30 @@
             <button class="btn btn-pink" onclick="openModal('expenses-modal')">+ Adicionar Gasto</button>
             </div>
         </div>
-        <div class="card">
+        <div class="card"> <!-- GASTOS - Parte de baixo da área gastos -->
             <div class="card-title" id="expenses-list-title"></div>
             <div id="general-expenses-list"></div>
         </div>
         </div>
     </div>
+
     <!-- METAS -->
     <div id="page-metas" class="page hidden">
         <div class="container">
-        <div class="page-header page-header-row">
+        <div class="page-header page-header-row"> <!-- METAS - Parte de cima da área metas -->
             <div>
             <h2>Metas</h2>
             <p>Defina objetivos e receba sugestões para alcançá-los</p>
             </div>
             <button class="btn btn-primary btn-sm" onclick="openModal('goal-modal')">+ Nova Meta</button>
         </div>
-        <div id="goals-list"></div>
+        <div id="goals-list"></div>  <!-- METAS - Parte de baixo da área metas -->
         </div>
     </div>
+
     <!-- RELATÓRIOS -->
     <div id="page-relatorios" class="page hidden">
-        <div class="container-wide">
+        <div class="container-wide"> <!-- RELATÓRIOS - Parte de cima da área relatórios -->
         <div class="page-header">
             <h2>Relatórios</h2>
             <p>Visão consolidada de todos os meses</p>
@@ -159,8 +162,10 @@
         </div>
     </div>
     </div>
+
     <!-- MODALS -->
-    <div class="modal-overlay" id="extra-modal">
+    <!-- MODALS - Começa modal renda extra-->
+    <div class="modal-overlay" id="extra-modal"> 
     <div class="modal">
         <button class="close-btn" onclick="closeModal('extra-modal')">✕</button>
         <h3>Adicionar Renda Extra</h3>
@@ -169,6 +174,9 @@
         <button class="btn btn-primary btn-full" onclick="addExtraIncome()">Adicionar</button>
     </div>
     </div>
+    <!-- MODALS - Termina modal renda extra-->
+
+    <!-- MODALS - Começa modal novo gasto cartão-->
     <div class="modal-overlay" id="card-modal">
     <div class="modal">
         <button class="close-btn" onclick="closeModal('card-modal')">✕</button>
@@ -183,7 +191,10 @@
         <button class="btn btn-blue btn-full" onclick="addCardExpense()">Adicionar</button>
     </div>
     </div>
-    <div class="modal-overlay" id="expenses-modal">
+    <!-- MODALS - Termina modal novo gasto cartão-->
+
+    <!-- MODALS - Começa modal gastos-->
+    <div class="modal-overlay" id="expenses-modal"> Novo gastos 
     <div class="modal">
         <button class="close-btn" onclick="closeModal('expenses-modal')">✕</button>
         <h3>Novo Gasto</h3>
@@ -197,6 +208,9 @@
         <button class="btn btn-pink btn-full" onclick="addGeneralExpense()">Adicionar</button>
     </div>
     </div>
+    <!-- MODALS - Termina modal gastos-->
+
+    <!-- MODALS - Começa modal metas-->
     <div class="modal-overlay" id="goal-modal">
     <div class="modal">
         <button class="close-btn" onclick="closeModal('goal-modal')">✕</button>
@@ -206,7 +220,7 @@
         <button class="btn btn-primary btn-full" onclick="addGoal()">✨ Criar e gerar sugestões</button>
     </div>
     </div>
-
+    <!-- MODALS - Termina modal metas-->
 
     <script src="script.js"> </script>
 </body>
