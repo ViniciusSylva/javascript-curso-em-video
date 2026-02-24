@@ -15,6 +15,7 @@ function persist() {
   save("finance_incomes", incomes);
   save("finance_goals", goals);
 }
+
 const now = new Date();
 const cMonth = now.getMonth(), cYear = now.getFullYear();
 function byMonth(arr, y, m) { return arr.filter(e => { const d = new Date(e.date); return d.getFullYear() === y && d.getMonth() === m; }); }
@@ -25,6 +26,8 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('active'); });
 });
+
+
 // ==================== NAVIGATION ====================
 let currentPage = 'dashboard';
 document.querySelectorAll('.sidebar a').forEach(a => {
@@ -41,6 +44,8 @@ function navigateTo(page) {
   document.querySelectorAll('.sidebar a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
   renderCurrentPage();
 }
+
+
 // ==================== SALARY ====================
 function startEditSalary() {
   const sal = getSalary();
@@ -49,6 +54,7 @@ function startEditSalary() {
   document.getElementById('salary-edit').classList.remove('hidden');
   document.getElementById('salary-input').focus();
 }
+
 function saveSalary() {
   const v = parseFloat(document.getElementById('salary-input').value);
   if (isNaN(v) || v < 0) return;
@@ -60,11 +66,15 @@ function saveSalary() {
   document.getElementById('salary-edit').classList.add('hidden');
   renderDashboard();
 }
+
 function getSalary() {
   const s = incomes.find(i => i.type === 'salary' && (() => { const d = new Date(i.date); return d.getFullYear() === cYear && d.getMonth() === cMonth; })());
   return s ? s.value : 0;
 }
+
 document.getElementById('salary-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveSalary(); });
+
+
 // ==================== EXTRA INCOME ====================
 function addExtraIncome() {
   const name = document.getElementById('extra-name').value.trim();
@@ -77,11 +87,14 @@ function addExtraIncome() {
   closeModal('extra-modal');
   renderDashboard();
 }
+
 function removeIncome(id) {
   incomes = incomes.filter(i => i.id !== id);
   persist();
   renderDashboard();
 }
+
+
 // ==================== CARD EXPENSES ====================
 function addCardExpense() {
   const name = document.getElementById('card-name').value.trim();
@@ -95,11 +108,14 @@ function addCardExpense() {
   closeModal('card-modal');
   renderCurrentPage();
 }
+
 function removeCardExpense(id) {
   cardExpenses = cardExpenses.filter(e => e.id !== id);
   persist();
   renderCurrentPage();
 }
+
+
 // ==================== GENERAL EXPENSES ====================
 function addGeneralExpense() {
   const name = document.getElementById('exp-name').value.trim();
@@ -113,11 +129,14 @@ function addGeneralExpense() {
   closeModal('expenses-modal');
   renderCurrentPage();
 }
+
 function removeGeneralExpense(id) {
   generalExpenses = generalExpenses.filter(e => e.id !== id);
   persist();
   renderCurrentPage();
 }
+
+
 // ==================== GOALS ====================
 function generateSuggestions(title) {
   const lower = title.toLowerCase();
@@ -131,6 +150,7 @@ function generateSuggestions(title) {
   if (tips.length === 0) tips.push("Defina um valor específico e um prazo realista para alcançar essa meta.","Divida a meta em etapas menores e comemore cada conquista parcial.","Acompanhe o progresso semanalmente para manter a motivação.","Corte pelo menos um gasto supérfluo por mês e redirecione para a meta.");
   return tips;
 }
+
 function addGoal() {
   const title = document.getElementById('goal-title').value.trim();
   const notes = document.getElementById('goal-notes').value.trim();
@@ -144,12 +164,14 @@ function addGoal() {
   expandedGoalId = goals[0].id;
   renderGoals();
 }
+
 function removeGoal(id) {
   goals = goals.filter(g => g.id !== id);
   persist();
   if (expandedGoalId === id) expandedGoalId = null;
   renderGoals();
 }
+
 function addMoreSuggestions(id) {
   const g = goals.find(x => x.id === id);
   if (!g) return;
@@ -158,8 +180,11 @@ function addMoreSuggestions(id) {
   persist();
   renderGoals();
 }
+
 let expandedGoalId = null;
 function toggleGoal(id) { expandedGoalId = expandedGoalId === id ? null : id; renderGoals(); }
+
+
 // ==================== CALENDAR ====================
 let calYear = cYear, calMonth = cMonth;
 function renderCalendar() {
@@ -184,6 +209,8 @@ function renderCalendar() {
   html += '</div>';
   container.innerHTML = html;
 }
+
+
 // ==================== RENDER FUNCTIONS ====================
 function renderDashboard() {
   document.getElementById('dash-subtitle').textContent = `Visão geral de ${MONTHS[cMonth]} ${cYear}`;
@@ -194,9 +221,11 @@ function renderDashboard() {
   const extras = byMonth(incomes.filter(i => i.type === 'extra'), cYear, cMonth);
   const totalIncome = byMonth(incomes, cYear, cMonth).reduce((s, i) => s + i.value, 0);
   const saldo = totalIncome - totalGastos;
+
   // Salary button
   const salBtn = document.getElementById('salary-btn');
   salBtn.textContent = salary > 0 ? `R$ ${fmt(salary)}` : 'Definir salário';
+
   // Extra incomes
   let extraHtml = '';
   extras.forEach(inc => {
@@ -209,6 +238,7 @@ function renderDashboard() {
   document.getElementById('dash-total-gastos').textContent = `R$ ${fmt(totalGastos)}`;
   document.getElementById('dash-card-total').textContent = `R$ ${fmt(cardTotal)}`;
   document.getElementById('dash-expenses-total').textContent = `R$ ${fmt(expTotal)}`;
+
   // Recent transactions
   const all = [
     ...byMonth(cardExpenses, cYear, cMonth).map(e => ({ ...e, source: 'Cartão' })),
@@ -219,6 +249,7 @@ function renderDashboard() {
   else { txEl.innerHTML = all.map(tx => `<div class="list-item"><div><span class="name">${tx.name}</span><br><span class="sub">${tx.category} · ${tx.source}</span></div><span class="amount text-pink">-R$ ${fmt(tx.value)}</span></div>`).join(''); }
   renderCalendar();
 }
+
 function renderCard() {
   const expenses = byMonth(cardExpenses, cYear, cMonth);
   const total = sumByMonth(cardExpenses, cYear, cMonth);
@@ -229,6 +260,7 @@ function renderCard() {
   if (expenses.length === 0) { el.innerHTML = '<div class="empty">Nenhum gasto registrado neste mês.</div>'; }
   else { el.innerHTML = expenses.map(e => `<div class="list-item"><div><span class="name">${e.name}</span><br><span class="sub">${e.category}</span></div><div class="right"><span class="amount text-pink">-R$ ${fmt(e.value)}</span><button class="delete-btn" onclick="removeCardExpense('${e.id}')">🗑</button></div></div>`).join(''); }
 }
+
 function renderExpenses() {
   const expenses = byMonth(generalExpenses, cYear, cMonth);
   const total = sumByMonth(generalExpenses, cYear, cMonth);
@@ -239,6 +271,7 @@ function renderExpenses() {
   if (expenses.length === 0) { el.innerHTML = '<div class="empty">Nenhum gasto registrado neste mês.</div>'; }
   else { el.innerHTML = expenses.map(e => `<div class="list-item"><div><span class="name">${e.name}</span><br><span class="sub">${e.category}</span></div><div class="right"><span class="amount text-pink">-R$ ${fmt(e.value)}</span><button class="delete-btn" onclick="removeGeneralExpense('${e.id}')">🗑</button></div></div>`).join(''); }
 }
+
 function renderGoals() {
   const el = document.getElementById('goals-list');
   if (goals.length === 0) {
@@ -267,6 +300,7 @@ function renderGoals() {
     </div>`;
   }).join('');
 }
+
 function renderReports() {
   const allExp = [...cardExpenses, ...generalExpenses];
   const monthSet = new Set(allExp.map(e => { const d = new Date(e.date); return `${d.getFullYear()}-${d.getMonth()}`; }));
@@ -299,6 +333,7 @@ function renderReports() {
   });
   el.innerHTML = reportsHtml;
 }
+
 function renderCurrentPage() {
   if (currentPage === 'dashboard') renderDashboard();
   else if (currentPage === 'cartao') renderCard();
@@ -306,5 +341,6 @@ function renderCurrentPage() {
   else if (currentPage === 'metas') renderGoals();
   else if (currentPage === 'relatorios') renderReports();
 }
+
 // Initial render
 renderDashboard();
