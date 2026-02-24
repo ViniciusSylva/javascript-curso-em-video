@@ -1,25 +1,110 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>APP de Clima</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clima em tempo real</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Importa font -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        <h1>Clima 🌤️</h1>
-
-        <input type="text" id="cidade" placeholder="Digite a cidade">
-        <button id="buscar">Buscar</button>
-
-        <div class="resultado">
-            <h2 id="nomeCidade"></h2>
-            <p id="temperatura"></p>
-            <p id="descricao"></p>
+  <div class="bg-decoration">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+  <main class="container">
+    <!-- Header -->
+    <div class="header fade-in-up">
+      <div class="header-title">
+        <!-- SVG direto do site -->
+        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- ícone de sol + nuvem -->
+          <path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>
+        </svg>
+        <h1>Painel do Clima</h1>
+      </div>
+      <p class="header-subtitle">Descubra o clima em qualquer cidade do mundo</p>
+    </div>
+    <!-- Barra de busca -->
+    <form id="searchForm" class="search-bar fade-in-up" style="animation-delay: 0.1s">
+        <!-- Lupa em SVG -->
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Círculo da lupa -->
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="text" id="cityInput" placeholder="Buscar cidade..." autocomplete="off" />
+      <button type="submit" id="searchBtn">Buscar</button>
+    </form>
+    <!-- Carregamento -->
+    <div id="loading" class="loading hidden">
+      <div class="spinner"></div>
+      <p>Buscando clima...</p>
+    </div>
+    <!-- Card -->
+    <div id="weatherCard" class="weather-card hidden">
+      <div class="weather-city">
+        <h2 id="cityName"></h2>
+        <p id="countryName"></p>
+      </div>
+      <div class="weather-main">
+        <img id="weatherIcon" class="weather-icon" src="" alt="clima" />
+        <div>
+          <p class="temperature" id="temperature"></p>
+          <p class="description" id="description"></p>
         </div>
+      </div>
+      <div class="feels-like">
+        <!-- SVG de termômetro -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Complementa o termômetro -->
+            <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
+        </svg>
+        <span>Sensação térmica: <strong id="feelsLike"></strong></span>
+      </div>
+      <div class="details-grid">
+        <div class="detail-card">
+          <!-- SVG gota de água -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- da mais detalhe a gota -->
+            <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/>
+          </svg>
+          <span class="detail-label">Umidade</span>
+          <span class="detail-value" id="humidity"></span>
+        </div>
+        <div class="detail-card">
+          <!-- SVG ícone de vento -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- linhas simulando rajadas de vento -->
+            <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+          </svg>
+          <span class="detail-label">Vento</span>
+          <span class="detail-value" id="windSpeed"></span>
+        </div>
+        <div class="detail-card">
+          <!-- SVG ícone de olho -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Desenha a forma externa do olho -->
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="detail-label">Visibilidade</span>
+          <span class="detail-value" id="visibility"></span>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Card de erro -->
+    <div id="errorCard" class="error-card hidden">
+      <!-- SVG mapa com marcador -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Desenha o formato externo do marcador -->
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <p class="error-title">Cidade não encontrada</p>
+      <p class="error-subtitle">Verifique o nome e tente novamente.</p>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
